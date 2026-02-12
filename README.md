@@ -1,1 +1,1 @@
-Original code obtained from the rep: https://github.com/RGenDiff/open-litevae
+Original code obtained from the repo: https://github.com/RGenDiff/open-litevae
