@@ -1,0 +1,26 @@
+Using bfloat16 Automatic Mixed Precision (AMP)
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+/home/bmutembei36/.conda/envs/lightvae/lib/python3.10/site-packages/pytorch_lightning/trainer/connectors/logger_connector/logger_connector.py:76: Starting from v1.9.0, `tensorboardX` has been removed as a dependency of the `pytorch_lightning` package, due to potential conflicts with other packages in the ML ecosystem. For this reason, `logger=True` will use `CSVLogger` as the default logger, unless the `tensorboard` or `tensorboardX` packages are found. Please `pip install lightning[extra]` or one of them to enable TensorBoard support by default
+/home/bmutembei36/.conda/envs/lightvae/lib/python3.10/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:881: Checkpoint directory /scratch/bmutembei36/litevae_runs/checkpoints exists and is not empty.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+/home/bmutembei36/.conda/envs/lightvae/lib/python3.10/site-packages/pytorch_lightning/utilities/model_summary/model_summary.py:242: Precision bf16-mixed is not supported by the model summary.  Estimated model size in MB will not be accurate. Using 32 bits instead.
+
+  | Name      | Type                 | Params | Mode  | FLOPs
+-------------------------------------------------------------------
+0 | encoder   | LiteVAE_Encoder      | 26.4 M | train | 0    
+1 | decoder   | LiteVAE_Decoder      | 53.4 M | train | 0    
+2 | loss      | LiteVAEAuthorGANLoss | 44.1 M | train | 0    
+3 | quantizer | Module               | 0      | train | 0    
+-------------------------------------------------------------------
+123 M     Trainable params
+0         Non-trainable params
+123 M     Total params
+495.303   Total estimated model params size (MB)
+816       Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+SLURM auto-requeueing enabled. Setting signal handlers.
+srun: Job step aborted: Waiting up to 62 seconds for job step to finish.
+slurmstepd: error: *** JOB 29457607 ON c1042 CANCELLED AT 2026-02-12T13:07:16 ***
+slurmstepd: error: *** STEP 29457607.0 ON c1042 CANCELLED AT 2026-02-12T13:07:16 ***

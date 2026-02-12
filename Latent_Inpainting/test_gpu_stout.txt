@@ -1,0 +1,9 @@
+torch 2.5.1+cu121 cuda= 12.1 built= True avail= True
+Using device: cuda
+PyTorch: 2.5.1+cu121
+TorchVision: 0.20.1+cu121
+Torchaudio: 2.5.1+cu121
+CUDA available: True
+GPU name: NVIDIA H100 NVL
+CUDA version PyTorch was compiled with: 12.1
+cuDNN version: 90100
