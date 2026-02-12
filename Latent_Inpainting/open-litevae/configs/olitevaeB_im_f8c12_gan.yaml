@@ -1,0 +1,48 @@
+model:
+  base_learning_rate: 1.0e-4
+  target: olvae.models.liteautoencoder.LiteAutoencoderKL
+  params:
+    use_ema: False
+    embed_dim: 16
+    use_quant: False   # Using VAE moments (mu, logvar) directly
+
+    encoder_config:
+        target: olvae.modules.litevae.encoder_model.LiteVAE_Encoder
+        params:
+            in_channels: 3
+            dct_levels: 3
+            latent_dim: 32  # Must be 2 * embed_dim because use_quant is False
+            image_size: 256
+            extractor_channels: 64
+            extractor_mult: [1,2,3]
+            extractor_resblocks: 4
+            aggregate_channels: 64
+            aggregate_mult: [1,2,3]
+            aggregate_resblocks: 4
+            
+    decoder_config:
+        target: olvae.modules.litevae.decoder_model.LiteVAE_Decoder
+        params:
+            channels: 128
+            z_channels: 16  # Must match top-level embed_dim
+            out_channels: 3 
+            channel_mult: [1,2,4,4] 
+            num_res_blocks: 2
+        
+    lossconfig:
+        target: olvae.modules.losses.litevae_author_loss_gan.LiteVAEAuthorGANLoss
+        params:
+          rec_type: l1
+          rec_weight: 1.0
+          gaussian_weight: 0.05   # Added small weight for stability
+          wavelet_weight: 0.1     # Recommended to prevent stagnant/blurry loss
+          kl_weight_max: 1.0e-6
+          anneal_steps: 10000
+      
+          use_gan: true
+          disc_loss: hinge
+          disc_weight: 0.1
+          disc_start: 20000        
+          disc_resolution: 256
+          disc_ch: 64
+          disc_attn: "64"

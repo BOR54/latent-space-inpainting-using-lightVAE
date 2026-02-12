@@ -1,0 +1,56 @@
+model:
+  base_learning_rate: 1.0e-4
+  target: olvae.models.liteautoencoder.LiteAutoencoderKL
+  params:
+    use_ema: False
+    embed_dim: 16
+    use_quant: False
+
+    encoder_config:
+        target: olvae.modules.litevae.encoder_model.LiteVAE_Encoder
+        params:
+            # config for base liteVAE encoder. ~6.6M Params
+            in_channels: 3
+            dct_levels: 3
+            latent_dim: 16
+            image_size: 256
+            # feature extractor (Note: there is one per DCT level)
+            extractor_channels: 32
+            extractor_mult: [1,2,3]
+            extractor_resblocks: 4
+            # feature aggregator
+            aggregate_channels: 32
+            aggregate_mult: [1,2,3]
+            aggregate_resblocks: 4
+            
+    decoder_config:
+        target: olvae.modules.litevae.decoder_model.LiteVAE_Decoder
+        params:
+            # config for SD-VAE's decoder. ~53M Params
+            channels: 128
+            z_channels: 16
+            out_channels: 3 
+            channel_mult: [1,2,4,4] 
+            num_res_blocks: 2
+        
+        
+    lossconfig:
+      target: olvae.modules.losses.litevae_author_loss.LiteVAEAuthorLoss
+      params:
+        rec_type: l2
+        rec_weight: 0.5
+    
+        # author-style extra terms
+        wavelet_weight: 0.1
+        gaussian_weight: 0.1
+        gaussian_kernel_size: 5
+        gaussian_sigma: 1.0
+        wavelet: "haar"
+        eps: 1.0e-3
+    
+        # KL anneal (you already had this idea)
+        kl_weight_max: 0.001
+        anneal_steps: 1000
+
+    
+
